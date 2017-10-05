@@ -49,6 +49,7 @@ class nginx {
 		mode	=> '0644',
 		source	=> 'puppet:///modules/nginx/default.conf',
 		require	=> Package['nginx'],
+		notify	=> Service['nginx'],
 	}
 
 	file { 'nginx.service':
@@ -58,11 +59,16 @@ class nginx {
 		mode	=> '0644',
 		source 	=> 'puppet:///modules/nginx/nginx.service',
 		require	=> Package['nginx'],	
+		notify	=> Service['nginx'],
 	}
 
 	service { 'nginx':
 		ensure	=> 'running',
 		enable	=> true,
 		require	=> File['nginx.service'],
+		subscribe	=> File['nginx.conf'],
 	}
+	
+	$search_entry = "search google.com yahoo.com msn.com"
+
 }

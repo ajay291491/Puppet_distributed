@@ -35,42 +35,53 @@ file { '/etc/motd':
 }
 
 #
-# Node definition for puppetagentcentos.sathsang.lab.net
+# Node definition for clientnode01 & 02
 #
-#node 'puppetagentcentos.sathsang.lab.net' {
-#
-#	notify { "This policy should only applied to puppetagentcentos": }
-#	file { '/etc/issue':
-#		ensure => "present",
-#		owner  => "sathsang",
-#		group  => "sathsang",
-#		mode   => "644",
-#		content => "Manged by puppetmaster ",
-#	}
-#}
 
-#
-# Node definition for puppetagentcentos.sathsang.lab.net and puppetagentdefora.sathsang.lab.net
-#
-node /^client.+0[1-9].svr.apac.sathsang.net$/ {
+node /^client.+0[1-2].svr.apac.sathsang.net$/ {
 	
 	notify { 'node_def_message':
 		message => "This is a common policy which cater to both centos and feroda agent on sathsang.lab.net domain",
+	}
+	#notify {'common_alert_message':
+	#	message  => 'This node have just going through a puppet run',
+	#}
+	notify {'This node has just gone through a puppet run':
 	}
 	package {'samba.x86_64':
 		ensure => "installed",
 		name   => "samba.x86_64",
 	}	
 	file {'dns_config':
-		name	=> '/etc/resolv.conf',
+		path	=> '/etc/resolv.conf',
 		owner	=> 'root',
 		group	=> 'root',
 		mode	=> '0644',
 		source	=> 'puppet:///modules/sathsang_dns/resolv.conf',
 	}
+	file {'app_dir':
+		path 	=> '/var/tmp/cache_dir_ppt',
+		ensure	=> 'directory',
+		mode	=> '0644',
+		owner	=> 'sathsang',
+		group	=> 'root',
+	}
 	include rear
 	include hosts
 }
+
+# 
+# Node definition for clientnode03
+#
+
+node clientnode03.svr.apac.sathsang.net { 
+
+	notify {'web_notify':
+		message	=> "nginx webserver on this host is managed by Puppet",
+	}
+	include nginx
+	include log_manager
+}	
 
 #
 # Configuration ends
