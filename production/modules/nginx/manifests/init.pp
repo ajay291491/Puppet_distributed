@@ -1,62 +1,54 @@
 class nginx {
 
-	file { 'nginx.repo':
-		name	=> '/etc/yum.repos.d/nginx.repo',
-		ensure	=> 'file',
+	notify {"Puppet is preparing to configure nginx web server on ${::hostname}":}	
+	
+	include nginx::params
+
+	File {
 		owner	=> 'root',
 		group	=> 'root',
 		mode	=> '0644',
+	}
+
+	file { 'nginx.repo':
+		name	=> "$nginx::params::nginx_repo_file",
+		ensure	=> 'file',
 		source	=> 'puppet:///modules/nginx/nginx.repo',
 	}
 
 	package { 'nginx':
 		name	=> 'nginx',
 		ensure	=> 'present',
-		require	=> File['/etc/yum.repos.d/nginx.repo'],
+		require	=> File['nginx.repo'],
 	}
 
 	file { 'base_dir':
-		name	=> '/var/www/',
+		name	=> "$nginx::params::httpd_root_dir",
 		ensure	=> 'directory',
-		owner	=> 'root',
-		group	=> 'root',
-		mode 	=> '0755',
 		require	=> Package['nginx'],
 	}
 	
 	file { 'index.html':
-		name	=> '/var/www/index.html',
-		owner	=> 'root',
-		group 	=> 'root',
-		mode	=> '0644',
+		name	=> "$nginx::params::index_file",
 		source 	=> 'puppet:///modules/nginx/index.html',
-		#require	=> File['/var/www/'],
+		require	=> [ File['base_dir'], Package['nginx'] ]
 	}
 
 	file { 'nginx.conf':
-		name	=> "/etc/nginx/nginx.conf",
-		owner	=> "root",
-		group	=> "root",
-		mode	=> '0644',
+		name	=> "$nginx::params::nginx_conf_file",
 		source	=> 'puppet:///modules/nginx/nginx.conf',
 		require	=> Package['nginx'],
 	}
 
 	file { 'default.conf':
-		name	=> '/etc/nginx/conf.d/default.conf',
-		owner	=> 'root',
-		group	=> 'root',
-		mode	=> '0644',
+		name	=> "$nginx::params::nginx_default_file",
 		source	=> 'puppet:///modules/nginx/default.conf',
 		require	=> Package['nginx'],
 		notify	=> Service['nginx'],
 	}
 
 	file { 'nginx.service':
-		name	=> '/lib/systemd/system/nginx.service',
-		owner	=> 'root',
-		group	=> 'root',
-		mode	=> '0644',
+		name	=> "$nginx::params::nginx_sstmctl_file",
 		source 	=> 'puppet:///modules/nginx/nginx.service',
 		require	=> Package['nginx'],	
 		notify	=> Service['nginx'],
@@ -68,7 +60,8 @@ class nginx {
 		require	=> File['nginx.service'],
 		subscribe	=> File['nginx.conf'],
 	}
-	
-	$search_entry = "search google.com yahoo.com msn.com"
 
+notify {"Puppet completed  configuring nginx web server on ${::hostname}":}
+
+	
 }
