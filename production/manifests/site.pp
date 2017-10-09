@@ -81,6 +81,20 @@ node clientnode03.svr.apac.sathsang.net {
 	}
 	include nginx
 	include log_manager
+	
+	$package_name = $::operatingsystem ? {
+    	'Centos'    => 'nano.x86_64',
+    	'Redhat'    => 'vim-common.x86_64',
+		default	    => 'gedit.x86_64',
+    	}
+	
+	Package {'editor_pkg':
+		ensure	=> 'present',
+		name 	=> "$package_name",
+	}
+	
+	include key_apps
+	include health_check
 }	
 
 #
