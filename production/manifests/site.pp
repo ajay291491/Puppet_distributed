@@ -95,6 +95,7 @@ node clientnode03.svr.apac.sathsang.net {
 	
 	include key_apps
 	include health_check
+	include add_users
 }	
 
 #
