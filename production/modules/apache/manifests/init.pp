@@ -11,7 +11,6 @@ class apache {
 	$document_root = hiera('docroot')
 	$port	=  hiera('port')
 
-	notify {"TEST : $document_root and $port":}
 	$websrvr_name=$::hostname	
 
 	apache::vhost {"${websrvr_name}_httpd":
