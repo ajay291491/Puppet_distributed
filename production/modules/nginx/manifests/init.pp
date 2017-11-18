@@ -63,5 +63,7 @@ class nginx {
 
 notify {"Puppet completed  configuring nginx web server on ${::hostname}":}
 
+# TEST
+
 	
 }
