@@ -1,0 +1,7 @@
+---
+package_manager: 'Yellowdog Updater Modified (Yum)'
+network_manager: 'NetworkManager (nmcli)'
+ntp_manager: 'chronyd and crony.conf'
+service_manager: 'system service manager (systemd)'
+#ntp_servers: 'wrong_entry'
+
