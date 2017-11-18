@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>
+  File: README
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!file.README.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: README</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="puppet_manifest_list_link"
+        href="puppet_manifest_list.html">
+      Puppet Manifest List
+    </a>
+  
+    <a class="full_list_link" id="puppet_plugin_list_link"
+        href="puppet_plugin_list.html">
+      Puppet Plugin List
+    </a>
+  
+    <a class="full_list_link" id="puppet_type_list_link"
+        href="puppet_type_list.html">
+      Puppet Type List
+    </a>
+  
+    <a class="full_list_link" id="puppet_provider_list_link"
+        href="puppet_provider_list.html">
+      Puppet Provider List
+    </a>
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><div id='filecontents'><h1>rear</h1>
+
+<p><a href="https://travis-ci.org/thbe/puppet-rear"><img src="https://travis-ci.org/thbe/puppet-rear.png?branch=master" alt="Build Status"></a>
+<a href="https://forge.puppetlabs.com/thbe/rear"><img src="https://img.shields.io/puppetforge/v/thbe/rear.svg" alt="Puppet Forge"></a>
+<a href="https://coveralls.io/github/thbe/puppet-rear?branch=master"><img src="https://coveralls.io/repos/thbe/puppet-rear/badge.svg?branch=master&amp;service=github" alt="Coverage Status"></a></p>
+
+<h4>Table of Contents</h4>
+
+<ol>
+<li><a href="#description">Description</a></li>
+<li><a href="#setup">Setup - The basics of getting started with rear</a>
+
+<ul>
+<li><a href="#what-rear-affects">What rear affects</a></li>
+</ul></li>
+<li><a href="#usage">Usage - Configuration options and additional functionality</a></li>
+<li><a href="#reference">Reference - An under-the-hood peek at what the module is doing and how</a></li>
+<li><a href="#limitations">Limitations - OS compatibility, etc.</a></li>
+<li><a href="#development">Development - Guide for contributing to the module</a></li>
+</ol>
+
+<h2>Description</h2>
+
+<p>The rear module install and configures the Relax and Recovery suite (<a href="http://relax-and-recover.org">http://relax-and-recover.org</a>)
+that provides an easy to use script to create backup and recovery images.</p>
+
+<h2>Setup</h2>
+
+<h3>What rear affects</h3>
+
+<ul>
+<li>Install rear package</li>
+<li>Setup basic rear cron job</li>
+</ul>
+
+<h2>Usage</h2>
+
+<h3>ReaR minimal</h3>
+
+<pre class="code puppet"><code class="puppet">class { &#39;rear&#39;:
+  output_url =&gt; &#39;nfs://192.168.100.1/backup/rear&#39;,
+  backup_url =&gt; &#39;nfs://192.168.100.1/backup/rear&#39;
+}
+</code></pre>
+
+<h3>ReaR with backup schedule and SSH password</h3>
+
+<pre class="code puppet"><code class="puppet">class { &#39;rear&#39;:
+  output_url =&gt; &#39;nfs://192.168.100.1/backup/rear&#39;,
+  backup_url =&gt; &#39;nfs://192.168.100.1/backup/rear&#39;
+  backup_schedule =&gt; &#39;weekly&#39;
+  ssh_root_password =&gt; &#39;HyperSecret01x!&#39;
+}
+</code></pre>
+
+<h2>Reference</h2>
+
+<p>Here is the list of parameters used by this module.</p>
+
+<h3><code>$output</code></h3>
+
+<p>Backup method that is used
+Default value is ISO</p>
+
+<h3><code>$output_url</code></h3>
+
+<p>Backup target that is used for backup method
+Default value is &#39;nfs://192.168.0.1/srv/rear&#39;</p>
+
+<h3><code>$backup</code></h3>
+
+<p>Backup method that is used
+Default value is NETFS</p>
+
+<h3><code>$backup_url</code></h3>
+
+<p>Backup target that is used for backup method
+Default value is &#39;nfs://192.168.0.1/srv/rear&#39;</p>
+
+<h3><code>$backup_schedule</code></h3>
+
+<p>Backup frequency (daily, weekly or monthly)
+Default value is none</p>
+
+<h3><code>$ssh_root_password</code></h3>
+
+<p>Password that could be used to log into the recover live image as root
+Default value is &#39;Recover!N0W&#39;</p>
+
+<h2>Limitations</h2>
+
+<p>This module has been built on and tested against Puppet 4.0 and higher.</p>
+
+<p>The module has been tested on:</p>
+
+<ul>
+<li>RedHat Enterprise Linux 6/7</li>
+<li>Scientific Linux 6/7</li>
+<li>CentOS Linux 6/7</li>
+</ul>
+
+<p>Testing on other platforms has been light and cannot be guaranteed.</p>
+
+<h2>Development</h2>
+
+<p>If you like to add or improve this module, feel free to fork the module and send
+me a merge request with the modification.</p>
+</div></div>
+
+    <div id="footer">
+  Generated on Fri Jun 17 13:33:56 2016 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.3.0).
+</div>
+
+  </body>
+</html>

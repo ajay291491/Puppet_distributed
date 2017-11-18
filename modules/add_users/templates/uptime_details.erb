@@ -1,0 +1,5 @@
+<% if @kernel =~ /Linux/ then -%>
+   <% @uptime.each do |val| -%>
+   Current uptime in <%= val %>
+   <% end -%>
+<% end -%>
