@@ -1,0 +1,7 @@
+---
+port: 80
+customdir: '/var/www/node02'
+docroot: '/var/www/node02/html'
+index: '/var/www/node02/html/index.html'
+           
+datacenter: sengkang 

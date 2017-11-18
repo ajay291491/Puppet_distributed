@@ -1,0 +1,13 @@
+### /etc/rear/local.conf
+#
+# Relax and Recover configuration file
+#
+# managed by Puppet, local changes will be overwritten
+#
+
+OUTPUT=<%= scope.lookupvar('rear::output') %>
+OUTPUT_URL=<%= scope.lookupvar('rear::output_url') %>
+BACKUP=<%= scope.lookupvar('rear::backup') %>
+BACKUP_URL=<%= scope.lookupvar('rear::backup_url') %>
+SSH_ROOT_PASSWORD=<%= scope.lookupvar('rear::ssh_root_password') %>
+BACKUP_PROG_EXCLUDE=("${BACKUP_PROG_EXCLUDE[@]}" '/media' '/var/tmp' '/var/crash')
